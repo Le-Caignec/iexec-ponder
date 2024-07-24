@@ -1,9 +1,10 @@
 import { createSchema } from "@ponder/core";
 
 export default createSchema((p) => ({
-  SwapEvent: p.createTable({
-    id: p.string(),
-    recipient: p.hex(),
-    payer: p.hex(),
+  TransferEvent: p.createTable({
+    id: p.bigint(),
+    name: p.string(),
+    owner: p.string(),
+    oracleSourceCode: p.string(),
   }),
 }));

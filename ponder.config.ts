@@ -1,7 +1,7 @@
 import { createConfig } from "@ponder/core";
 import { http } from "viem";
-
-import { PrimitiveManagerAbi } from "./abis/PrimitiveManagerAbi";
+import { AppRegistryAbi } from "./abis/AppRegistry";
+import { AppAbi } from "./abis/App";
 
 export default createConfig({
   networks: {
@@ -11,14 +11,19 @@ export default createConfig({
     },
   },
   contracts: {
-    PrimitiveManager: {
+    AppRegistry: {
       network: "mainnet",
-      abi: PrimitiveManagerAbi,
-      address: "0x54522dA62a15225C95b01bD61fF58b866C50471f",
-      startBlock: 14438081,
+      abi: AppRegistryAbi, // Use the imported ABI here
+      address: "0x799DAa22654128d0C64d5b79eac9283008158730",
+      startBlock: 25455501,
       filter: {
-        event: "Swap",
+        event: "Transfer",
       },
+    },
+    App: {
+      network: "mainnet",
+      abi: AppAbi,
+      startBlock: 25455501,
     },
   },
 });

@@ -1,13 +1,29 @@
 import { ponder } from "@/generated";
+import { bigintToAddress } from "./utils/utils";
 
-ponder.on("PrimitiveManager:Swap", async ({ event, context }) => {
-  const { SwapEvent } = context.db;
+ponder.on("AppRegistry:Transfer", async ({ event, context }) => {
+  const { TransferEvent } = context.db;
+  const { client } = context;
+  const { App } = context.contracts;
 
-  await SwapEvent.create({
-    id: event.log.id,
+  const owner = await client.readContract({
+    abi: App.abi,
+    address: bigintToAddress(event.args.tokenId), // need to convert token ID into address
+    functionName: "owner",
+  });
+  const name = await client.readContract({
+    abi: App.abi,
+    address: bigintToAddress(event.args.tokenId), // need to convert token ID into address
+    functionName: "m_appName",
+  });
+
+  const oracleSourceCode = "test";
+  await TransferEvent.create({
+    id: event.args.tokenId,
     data: {
-      payer: event.args.payer,
-      recipient: event.args.recipient,
+      owner,
+      name,
+      oracleSourceCode,
     },
   });
 });
