@@ -1,28 +1,33 @@
 import { ponder } from "@/generated";
 import { bigintToAddress } from "./utils/utils";
+import { AppAbi } from "../abis/App";
 
 ponder.on("AppRegistry:Transfer", async ({ event, context }) => {
-  const { TransferEvent } = context.db;
-  const { client } = context;
-  const { App } = context.contracts;
+  const { db, network, client, contracts } = context;
+  const appAddress = bigintToAddress(event.args.tokenId);
 
   const owner = await client.readContract({
-    abi: App.abi,
+    abi: AppAbi,
     address: bigintToAddress(event.args.tokenId), // need to convert token ID into address
     functionName: "owner",
   });
   const name = await client.readContract({
-    abi: App.abi,
+    abi: AppAbi,
     address: bigintToAddress(event.args.tokenId), // need to convert token ID into address
     functionName: "m_appName",
   });
 
   const oracleSourceCode = "test";
-  await TransferEvent.create({
-    id: event.args.tokenId,
-    data: {
-      owner,
-      name,
+  await db.App.upsert({
+    id: appAddress,
+    create: {
+      owner: owner,
+      name: name,
+      oracleSourceCode,
+    },
+    update: {
+      owner: owner,
+      name: name,
       oracleSourceCode,
     },
   });

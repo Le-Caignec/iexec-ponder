@@ -1,7 +1,6 @@
 import { createConfig } from "@ponder/core";
 import { http } from "viem";
 import { AppRegistryAbi } from "./abis/AppRegistry";
-import { AppAbi } from "./abis/App";
 
 export default createConfig({
   networks: {
@@ -19,11 +18,6 @@ export default createConfig({
       filter: {
         event: "Transfer",
       },
-    },
-    App: {
-      network: "mainnet",
-      abi: AppAbi,
-      startBlock: 25455501,
     },
   },
 });
