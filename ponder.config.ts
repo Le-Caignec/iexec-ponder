@@ -6,7 +6,7 @@ export default createConfig({
   networks: {
     bellecour: {
       chainId: 134,
-      transport: http(process.env.PONDER_RPC_URL_1),
+      transport: http(process.env.PONDER_RPC_URL_1, { batch: true }),
     },
   },
   contracts: {
