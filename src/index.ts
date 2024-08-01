@@ -17,7 +17,9 @@ ponder.on("AppRegistry:Transfer", async ({ event, context }) => {
     functionName: "m_appName",
   });
 
-  const oracleSourceCode = "test";
+  //Call To Market API
+
+  const oracleSourceCode = "testRobin";
   await db.App.upsert({
     id: appAddress,
     create: {
