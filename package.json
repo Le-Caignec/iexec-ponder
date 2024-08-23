@@ -1,10 +1,10 @@
 {
   "name": "iexec-ponder",
-  "type": "module",  "private": true,
-
+  "type": "module",
+  "private": true,
   "scripts": {
-    "dev": "ponder dev",
-    "start": "ponder start",
+    "dev": "ponder dev --log-level debug",
+    "start": "ponder start --log-level debug",
     "codegen": "ponder codegen",
     "serve": "ponder serve",
     "lint": "eslint .",
